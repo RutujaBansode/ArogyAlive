@@ -1,0 +1,27 @@
+
+# Frontend
+**/node_modules/
+**/dist/
+**/.env
+**/.env.*
+!**/.env.example
+**/*.zip
+
+# Backend
+**/target/
+**/uploads/
+**/test-files/
+
+# Debug files
+**/boot-debug.txt
+**/cp.txt
+**/runtime-cp.txt
+**/netstat
+**/taskkill
+
+# IDE
+.idea/
+.vscode/
+
+# Ignore local Spring Boot credentials
+**/application-local.properties

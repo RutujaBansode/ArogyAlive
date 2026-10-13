@@ -1,0 +1,925 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  /* Core neutrals */
+  --al-bg: #f3f9fb;
+  --al-bg-alt: #ffffff;
+  --al-surface: #ffffff;
+  --al-surface-hover: #eef7f6;
+  --al-border: #dfeaec;
+  --al-text: #0d2b33;
+  --al-text-muted: #5c7680;
+
+  /* Brand: deep teal-blue + emerald, with a warm coral accent used sparingly
+     for highlights so the palette doesn't read as a generic blue template */
+  --al-primary: #0a7ea3;
+  --al-primary-dark: #075e7a;
+  --al-primary-light: #e4f4f8;
+  --al-secondary: #0fa878;
+  --al-secondary-light: #e2f7ef;
+  --al-accent: #ff8a5b;
+  --al-accent-light: #ffe9dd;
+  --al-danger: #e2483f;
+  --al-warning: #dc9a1c;
+
+  --al-shadow: 0 12px 32px rgba(9, 45, 58, 0.1);
+  --al-shadow-sm: 0 3px 12px rgba(9, 45, 58, 0.07);
+  --al-shadow-glow: 0 10px 30px rgba(10, 126, 163, 0.22);
+  --al-gradient: linear-gradient(135deg, #0a7ea3 0%, #0fa878 100%);
+  --al-gradient-accent: linear-gradient(135deg, #ff8a5b 0%, #ffb26b 100%);
+  --al-hero-bg:
+    radial-gradient(60% 55% at 14% 8%, rgba(15, 168, 120, 0.12) 0%, rgba(15, 168, 120, 0) 60%),
+    radial-gradient(50% 55% at 90% 12%, rgba(10, 126, 163, 0.14) 0%, rgba(10, 126, 163, 0) 60%),
+    linear-gradient(180deg, #f6fbfc 0%, #f3f9fb 100%);
+  --al-font-display: 'Poppins', 'Plus Jakarta Sans', sans-serif;
+  --al-font-body: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+  --al-radius-lg: 20px;
+  --al-radius-md: 14px;
+  /* Tint laid over the Home page background photo — light and airy in light mode */
+  --al-home-bg-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.87) 0%, rgba(243, 249, 251, 0.93) 45%, rgba(243, 249, 251, 0.97) 100%);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --al-bg: #081720;
+  --al-bg-alt: #0d1f29;
+  --al-surface: #102633;
+  --al-surface-hover: #143241;
+  --al-border: #1b3948;
+  --al-text: #eaf6f7;
+  --al-text-muted: #93b0ba;
+
+  --al-primary: #3dc0e8;
+  --al-primary-dark: #1f96bd;
+  --al-primary-light: #123544;
+  --al-secondary: #33d9a3;
+  --al-secondary-light: #0f3630;
+  --al-accent: #ffa06e;
+  --al-accent-light: #3a2317;
+  --al-danger: #ff7268;
+  --al-warning: #f2bb3c;
+
+  --al-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+  --al-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.38);
+  --al-shadow-glow: 0 10px 30px rgba(61, 192, 232, 0.25);
+  --al-gradient: linear-gradient(135deg, #1f96bd 0%, #17916a 100%);
+  --al-gradient-accent: linear-gradient(135deg, #e07a48 0%, #ffa06e 100%);
+  --al-hero-bg:
+    radial-gradient(55% 55% at 16% 10%, rgba(51, 217, 163, 0.14) 0%, rgba(51, 217, 163, 0) 60%),
+    radial-gradient(50% 55% at 88% 14%, rgba(61, 192, 232, 0.16) 0%, rgba(61, 192, 232, 0) 60%),
+    linear-gradient(180deg, #0a1c25 0%, #081720 100%);
+  --al-font-display: 'Poppins', 'Plus Jakarta Sans', sans-serif;
+  --al-font-body: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+  --al-radius-lg: 20px;
+  --al-radius-md: 14px;
+  /* Tint laid over the Home page background photo — deep and muted in dark mode
+     so the light-colored photo doesn't clash with the dark theme */
+  --al-home-bg-overlay: linear-gradient(180deg, rgba(8, 23, 32, 0.9) 0%, rgba(8, 23, 32, 0.94) 45%, rgba(8, 23, 32, 0.97) 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--al-bg);
+  color: var(--al-text);
+  font-family: var(--al-font-body);
+  transition: background-color 0.25s ease, color 0.25s ease;
+  letter-spacing: 0.1px;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--al-font-display);
+  letter-spacing: -0.3px;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+.al-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.al-main {
+  flex: 1;
+  padding-bottom: 60px;
+}
+
+/* ---------- Buttons ---------- */
+.al-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  padding: 11px 22px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, filter 0.18s ease;
+}
+.al-btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+.al-btn-primary {
+  background: var(--al-gradient);
+  color: #ffffff;
+  box-shadow: var(--al-shadow-sm);
+}
+.al-btn-primary:hover {
+  box-shadow: var(--al-shadow-glow);
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+.al-btn-outline {
+  background: transparent;
+  color: var(--al-primary);
+  border: 1.5px solid var(--al-primary);
+}
+.al-btn-outline:hover {
+  background: var(--al-primary-light);
+}
+.al-btn-secondary {
+  background: var(--al-surface);
+  color: var(--al-text);
+  border: 1px solid var(--al-border);
+}
+.al-btn-secondary:hover {
+  background: var(--al-surface-hover);
+  border-color: var(--al-primary);
+  color: var(--al-primary-dark);
+}
+.al-btn-danger {
+  background: linear-gradient(135deg, #e2483f 0%, #ff7361 100%);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(226, 72, 63, 0.28);
+}
+.al-btn-danger:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+.al-btn-sm {
+  padding: 7px 14px;
+  font-size: 0.85rem;
+}
+.al-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.al-btn-block {
+  width: 100%;
+}
+
+/* ---------- Cards ---------- */
+.al-card {
+  position: relative;
+  background: var(--al-surface);
+  border: 1px solid var(--al-border);
+  border-radius: var(--al-radius-lg);
+  box-shadow: var(--al-shadow-sm);
+  padding: 22px;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.al-card-hover:hover {
+  box-shadow: var(--al-shadow);
+  transform: translateY(-3px);
+  border-color: rgba(10, 126, 163, 0.28);
+}
+.al-card-accent {
+  overflow: hidden;
+}
+.al-card-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--al-gradient);
+}
+
+/* ---------- Inputs ---------- */
+.al-input,
+.al-select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--al-border);
+  background: var(--al-bg-alt);
+  color: var(--al-text);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.al-input:focus,
+.al-select:focus {
+  border-color: var(--al-primary);
+}
+.al-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--al-text-muted);
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ---------- Badges ---------- */
+.al-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.al-badge-available {
+  background: rgba(18, 168, 120, 0.14);
+  color: var(--al-secondary);
+}
+.al-badge-limited {
+  background: rgba(217, 154, 28, 0.15);
+  color: var(--al-warning);
+}
+.al-badge-full {
+  background: rgba(224, 71, 63, 0.14);
+  color: var(--al-danger);
+}
+.al-badge-neutral {
+  background: var(--al-surface-hover);
+  color: var(--al-text-muted);
+}
+.al-badge-accent {
+  background: var(--al-accent-light);
+  color: var(--al-accent);
+}
+
+/* ---------- Navbar ---------- */
+.al-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--al-bg-alt);
+  border-bottom: 1px solid var(--al-border);
+  backdrop-filter: blur(6px);
+}
+.al-navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+.al-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-family: var(--al-font-display);
+  font-size: 1.28rem;
+  color: var(--al-primary-dark);
+}
+.al-logo-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--al-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(10, 126, 163, 0.32);
+  position: relative;
+}
+.al-logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(15, 168, 120, 0.35);
+}
+.al-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 4px 12px;
+  box-shadow: var(--al-shadow-sm);
+  border: 1px solid var(--al-border);
+}
+.al-logo-badge img {
+  display: block;
+  height: 58px;
+  width: auto;
+  border-radius: 8px;
+}
+.al-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.al-nav-link {
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.93rem;
+  color: var(--al-text-muted);
+}
+.al-nav-link:hover {
+  background: var(--al-surface-hover);
+  color: var(--al-text);
+}
+.al-nav-link.active {
+  color: var(--al-primary);
+  background: var(--al-surface-hover);
+}
+.al-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--al-border);
+  background: var(--al-surface);
+  color: var(--al-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.al-icon-btn:hover {
+  background: var(--al-surface-hover);
+}
+.al-mobile-toggle {
+  display: none;
+}
+.al-mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0 18px;
+  border-top: 1px solid var(--al-border);
+}
+.al-mobile-menu.open {
+  display: flex;
+}
+
+@media (max-width: 860px) {
+  .al-nav-links {
+    display: none;
+  }
+  .al-mobile-toggle {
+    display: flex;
+  }
+}
+
+/* ---------- Hero ---------- */
+.al-hero {
+  background: var(--al-hero-bg);
+  padding: 72px 0 84px;
+  position: relative;
+  overflow: hidden;
+}
+.al-hero-shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(6px);
+  pointer-events: none;
+}
+.al-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--al-surface);
+  border: 1px solid var(--al-border);
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--al-primary-dark);
+  box-shadow: var(--al-shadow-sm);
+  margin-bottom: 22px;
+}
+.al-hero h1 {
+  font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.14;
+  margin-bottom: 16px;
+}
+.al-hero h1 .al-hero-highlight {
+  background: var(--al-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.al-hero p.lead {
+  color: var(--al-text-muted);
+  font-size: 1.1rem;
+  max-width: 640px;
+  margin: 0 auto 34px;
+}
+.al-search-box {
+  background: var(--al-surface);
+  border: 1px solid var(--al-border);
+  border-radius: 20px;
+  box-shadow: var(--al-shadow-glow);
+  padding: 11px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ---------- Mic button ---------- */
+.al-mic-btn {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--al-surface-hover);
+  color: var(--al-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.al-mic-btn:hover {
+  background: var(--al-primary);
+  color: #fff;
+}
+.al-mic-btn.listening {
+  background: var(--al-danger);
+  color: #fff;
+}
+.al-mic-btn.listening::before,
+.al-mic-btn.listening::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--al-danger);
+  animation: al-pulse 1.6s ease-out infinite;
+}
+.al-mic-btn.listening::after {
+  animation-delay: 0.5s;
+}
+@keyframes al-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+/* ---------- Section ---------- */
+.al-section {
+  padding: 56px 0;
+}
+.al-section-eyebrow {
+  display: block;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--al-secondary);
+  margin-bottom: 8px;
+}
+.al-section-title {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.al-section-sub {
+  text-align: center;
+  color: var(--al-text-muted);
+  max-width: 560px;
+  margin: 0 auto 40px;
+}
+
+.al-icon-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--al-primary-light) 0%, var(--al-secondary-light) 100%);
+  color: var(--al-primary);
+  margin-bottom: 14px;
+}
+.al-icon-circle-accent {
+  background: var(--al-accent-light);
+  color: var(--al-accent);
+}
+
+/* ---------- Assistant ---------- */
+.al-assistant-fab {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--al-gradient);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--al-shadow);
+  cursor: pointer;
+  z-index: 1200;
+  transition: transform 0.15s ease;
+}
+.al-assistant-fab:hover {
+  transform: scale(1.06);
+}
+.al-assistant-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 26px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  background: var(--al-surface);
+  border: 1px solid var(--al-border);
+  border-radius: 18px;
+  box-shadow: var(--al-shadow);
+  padding: 20px;
+  z-index: 1200;
+}
+
+/* ---------- Table ---------- */
+.al-table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--al-border);
+}
+table.al-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+table.al-table th,
+table.al-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--al-border);
+  font-size: 0.9rem;
+}
+table.al-table th {
+  background: var(--al-surface-hover);
+  font-weight: 700;
+  color: var(--al-text-muted);
+}
+table.al-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------- Tabs ---------- */
+.al-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--al-border);
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+.al-tab {
+  padding: 11px 18px;
+  font-weight: 600;
+  color: var(--al-text-muted);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.al-tab.active {
+  color: var(--al-primary);
+  border-color: var(--al-primary);
+}
+
+/* ---------- Footer ---------- */
+.al-footer {
+  background: var(--al-bg-alt);
+  border-top: 1px solid var(--al-border);
+  padding: 34px 0;
+  color: var(--al-text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Utility ---------- */
+.al-grid {
+  display: grid;
+  gap: 20px;
+}
+.al-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.al-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.al-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 960px) {
+  .al-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .al-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .al-grid-2,
+  .al-grid-3,
+  .al-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.al-muted {
+  color: var(--al-text-muted);
+}
+.al-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.al-stack-sm > * + * {
+  margin-top: 8px;
+}
+.al-stack > * + * {
+  margin-top: 16px;
+}
+
+.al-skeleton {
+  animation: al-shimmer 1.4s ease-in-out infinite;
+  background: var(--al-surface-hover);
+  border-radius: 10px;
+}
+@keyframes al-shimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.al-stat-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--al-surface);
+  border: 1px solid var(--al-border);
+  border-radius: var(--al-radius-md);
+  padding: 20px;
+  box-shadow: var(--al-shadow-sm);
+}
+.al-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--al-gradient);
+}
+.al-stat-value {
+  font-size: 1.9rem;
+  font-weight: 800;
+  font-family: var(--al-font-display);
+  background: var(--al-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.al-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 16, 24, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1400;
+  padding: 20px;
+}
+.al-modal {
+  background: var(--al-surface);
+  border-radius: 18px;
+  padding: 26px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--al-shadow);
+}
+
+.al-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--al-surface);
+  border: 1px solid var(--al-border);
+  box-shadow: var(--al-shadow);
+  border-radius: 12px;
+  padding: 14px 18px;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 260px;
+}
+
+/* ---------- Horizontal Hospital Card (Doctor Dashboard & Hospital View) ---------- */
+.al-horizontal-card {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+}
+.al-horizontal-card-info {
+  flex: 1 1 58%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.al-horizontal-card-image {
+  flex: 0 0 38%;
+  max-width: 360px;
+  min-height: 200px;
+  border-radius: var(--al-radius-md);
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--al-shadow-sm);
+}
+.al-horizontal-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.al-horizontal-card-image:hover img {
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .al-horizontal-card {
+    flex-direction: column-reverse;
+  }
+  .al-horizontal-card-image {
+    max-width: 100%;
+    width: 100%;
+    min-height: 180px;
+  }
+}
+
+/* ---------- Hospital Card Grid Image ---------- */
+.al-card-hospital-img {
+  width: 100%;
+  height: 150px;
+  border-radius: calc(var(--al-radius-md) - 4px);
+  object-fit: cover;
+  margin-bottom: 12px;
+  display: block;
+  background-color: var(--al-surface-hover);
+}
+
+/* ---------- Date Pill Selector ---------- */
+.al-date-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.al-date-pill {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--al-border);
+  background: var(--al-surface);
+  color: var(--al-text);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+}
+.al-date-pill:hover {
+  border-color: var(--al-primary);
+  background: var(--al-surface-hover);
+}
+.al-date-pill.active {
+  border-color: var(--al-primary);
+  background: var(--al-primary-light);
+  color: var(--al-primary-dark);
+  box-shadow: var(--al-shadow-sm);
+}
+
+/* ---------- Role Selection Cards in Registration ---------- */
+.al-role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.al-role-option-card {
+  padding: 14px 10px;
+  text-align: center;
+  border-radius: 14px;
+  border: 1.5px solid var(--al-border);
+  background: var(--al-surface);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.al-role-option-card:hover {
+  border-color: var(--al-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--al-shadow-sm);
+}
+.al-role-option-card.active {
+  border-color: var(--al-primary);
+  background: var(--al-primary-light);
+  box-shadow: 0 0 0 2px var(--al-primary);
+}
+
+/* ---------- Horizontal Doctor Card (info left | photo right) ---------- */
+/* Mirrors the hospital card layout for a consistent healthcare design.   */
+.al-doctor-card-horiz {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.al-doctor-card-info {
+  flex: 1 1 0;
+  padding: 22px 24px;
+  min-width: 0;
+}
+.al-doctor-card-photo-wrap {
+  flex: 0 0 160px;
+  width: 160px;
+  min-height: 200px;
+  overflow: hidden;
+  border-radius: 0 var(--al-radius-lg) var(--al-radius-lg) 0;
+  position: relative;
+}
+.al-doctor-card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  background-color: var(--al-surface-hover);
+  transition: transform 0.35s ease;
+}
+.al-doctor-card-horiz:hover .al-doctor-card-photo {
+  transform: scale(1.05);
+}
+@media (max-width: 560px) {
+  .al-doctor-card-horiz {
+    flex-direction: column;
+  }
+  .al-doctor-card-photo-wrap {
+    flex: none;
+    width: 100%;
+    height: 180px;
+    min-height: unset;
+    border-radius: 0 0 var(--al-radius-lg) var(--al-radius-lg);
+  }
+}
